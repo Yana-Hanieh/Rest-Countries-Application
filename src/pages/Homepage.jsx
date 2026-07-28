@@ -3,8 +3,10 @@ import Searchbar from "../components/Searchbar";
 
 const hardcodedCountries = [
   { name: "Turkey", region: "Asia", population: 84339067, flag: "🇹🇷" },
+  { name: "Turkey", region: "Asia", population: 84339067, flag: "🇹🇷" },
+  { name: "Turkey", region: "Asia", population: 84339067, flag: "🇹🇷" },
+  { name: "Turkey", region: "Asia", population: 84339067, flag: "🇹🇷" },
 ];
-
 
 
 const handleSearch = async (countryName) => {
@@ -37,6 +39,34 @@ function Homepage() {
       <p className="text-sm text-gray-500 mt-4"> 
         Found {filteredCountries.length} countries.
       </p>
+
+
+      <div className="w-full sm:w-1/2">
+        {hardcodedCountries.map((country) => (
+          <div className="bg-gray-100 flex flex-row gap-3 sm:gap-0 justify-between p-8 mt-3 rounded-xl items-center">
+        <div className="text-xl">Flag </div>
+        <div className="text-xl font-bold">Turkey</div>
+
+        <div className="flex flex-col">
+          <div className="text-gray-500 text-xs">Region</div>
+          <div className="font-semibold text-md">Asia</div>
+        </div>
+
+        <div className="flex flex-col">
+          <div className="text-gray-500 text-xs">popiulation</div>
+          <div className="font-semibold">5465218</div>
+        </div>
+        
+        <div className="flex flex-col">
+          <div className="text-gray-500 text-xs">Area km</div>
+          <div className="font-semibold text-md">5416546</div>
+        </div>  
+
+      </div>
+          
+        ))}
+     
+      </div>
 
     </div>
   );
