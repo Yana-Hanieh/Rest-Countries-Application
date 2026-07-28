@@ -1,61 +1,44 @@
 import { IoSearchSharp } from "react-icons/io5";
-import { useState } from "react";
 
+const regionStyles = {All: "bg-green-600", Asia: "bg-red-500",Africa:"bg-yellow-500", America:" bg-purple-500", Europe: "bg-blue-500", Oceania: "bg-cyan-500", Polar: "bg-blue-300"}; //object that contains the regions as "keys" and their styles as "values"
+const regions = Object.keys(regionStyles); //goes through the regionStyle object and gets the "keys" which are the regions and puts the keys as values for the region array
 
-
-
-function Searchbar(onSearch, placeholder) {
-
-    const [input, setInput]= useState("");
-    const [selectedFilter, setSelectedFilter] = useState("All");
-    const handleSubmit = (e) => {
-        e.preventDefault(); //on form submit the browser automatically reloads, so we use this to stops the browser from reloading
-    if (input.trim() === "") //trim() removes all whitespaces, if the result is an empty string only the input is ignored => doesnt invoke any data fetching
-        return;
-    onSearch(input);
-    setInput("");
-    };
-
+function Searchbar({searchInput, setSearchInput, selectedRegion, setSelectedRegion, placeholder}) { //the searchbar function which takes the props from the homepage
 
   return (
     <div className='justify-items-center'>
      
         {/* Search Setion */}
-        <div className="mt-4 border border-gray-200 rounded-full bg-gray-100 text-gray-500 px-2 py-4 w-full sm:w-6/3 flex flex-row gap-3 items-center cursor-pointer">
+        <form className="mt-4 border border-gray-200 rounded-full bg-gray-100 text-gray-500 px-2 py-4 w-1/2 sm:w-full flex flex-row gap-3 items-center cursor-pointer">
             <IoSearchSharp className="text-xl ml-4" />
             <input
                 type="text" 
-                placeholder={"Search by country name or region"|| "City"} //placeholder first then city
-                value={input} //displays the written text in the input state into the input box
-                onChange={(e) => setInput(e.target.value)} //runs when all pressed keys are appended into the text already in the input state
-                className="w-full"
+                placeholder={ placeholder || "Country"} //placeholder first if user didnt enter any input, or the country name that the user searched
+                value={searchInput} //displays the written text in the input state into the input box
+                onChange={(e) => setSearchInput(e.target.value)} //runs when all pressed keys are appended into the text already in the input state
+                className="w-full outline-none"
             />
-        </div>
+        </form>
         
        {/* filter section */}
-       <div className="flex flex-row gap-4 text-white mt-4">
-            {/* <span className="text-gray-500">Filter by region:</span>
-            <span className="border rounded-lg bg-green-800 px-4">All</span>
-            <span className="border rounded-lg bg-red-500">Asia</span>
-            <span className="border rounded-lg bg-yellow-500">Africa</span>
-            <span className="border rounded-lg bg-purple-500">America</span>
-            <span className="border rounded-lg bg-blue-500">Europe</span>
-            <span className="border rounded-lg bg-cyan-500">Oceania</span>
-            <span className="border rounded-lg bg-green-600">Polar</span> */}
-       {["All","Asia","Africa"].map((type) => (
-            <button 
-                key={type}
-                onClick={() => setSelectedFilter(type)}
-                className={`border rounded-lg text-white px-4 py-1 
-                    ${selectedFilter === type
-                        ? `bg-gray-300`
-                        : `text-black`}`}
-            >
-            </button>
-       ))}
-  
-     </div>
-        
+       <div className="flex flex-col gap-3 mt-2">
+            <span className="text-gray-500">Filter by region:</span>
+            <div className="flex flex-row gap-2 sm:gap-4 text-white">
+                {regions.map((region) => ( //maps through the array that contains the region names
+                    <button 
+                        key={region}
+                        onClick={() => setSelectedRegion(region)}
+                        className={`border rounded-lg text-white h-10 sm:px-4 sm:py-1 
+                            ${selectedRegion === region
+                                ? `${regionStyles[region]} `
+                                : `bg-gray-200 text-gray-600`}`}
+                    > 
+                        {region}    
+                    </button>
+                ))}
+            </div>
+        </div>
+
     </div>
   )
 }
