@@ -4,7 +4,7 @@ import Homepage from "./pages/Homepage";
 
 function App() {
   return (
-    <div className='bg-primary'>
+    <div className='bg-primary min-h-screen'>
       <div className="justify-between flex p-4 items-center">
         <span className="font-semibold text-lg">Rest Countries</span>
         <MdOutlineDarkMode className="text-2xl cursor-pointer" />
