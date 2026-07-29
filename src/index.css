@@ -2,5 +2,7 @@
 
 @theme {
   --color-primary: #e2e8f0;
-    
+  --color-secondary: #f8fafc;
+  --color-shadowColor: #94a3b8;
+  --color-hoverColor: #f3f4f4;    
 }

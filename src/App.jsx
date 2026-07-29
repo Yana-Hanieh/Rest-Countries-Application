@@ -1,6 +1,9 @@
 import { MdOutlineDarkMode } from "react-icons/md";
+import { Route, Routes, } from 'react-router-dom';
 import './App.css'
-import Homepage from "./pages/Homepage";
+import HomePage from "./pages/HomePage";
+import DetailsPage from "./pages/DetailsPage";
+
 
 function App() {
   return (
@@ -10,7 +13,12 @@ function App() {
         <MdOutlineDarkMode className="text-2xl cursor-pointer" />
       </div>
       <div className="border border-gray-300"></div>
-      <Homepage />
+       <Routes>
+          <Route path="/" element={<HomePage />}/>
+          <Route path="/details/:uuid" element={<DetailsPage />}/>
+      </Routes>
+      
+      
     </div>
   )
 }

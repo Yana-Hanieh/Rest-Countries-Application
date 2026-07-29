@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom";
 import Searchbar from "../components/Searchbar";
+import hardcodedCountries from "../CountriesData";
 
-const hardcodedCountries = [
-  { name: "Turkey", region: "Asia", population: 84339067, flag: "🇹🇷" , area: 84339067 , uuid: "0c883ff8-5732-4a64-b22d-a2777e8d894a" },
-  { name: "France", region: "Europe", population: 84339067, flag: "FR" , area: 84339067 , uuid: "0c883ff8-5732-4a64-b22d-a2777e8d894a" },
-  { name: "Japan", region: "Asia", population: 84339067, flag: "JP" , area: 84339067 , uuid: "0c883ff8-5732-4a64-b22d-a2777e8d894a" },
-  { name: "New Zealand", region: "Oceania", population: 84339067, flag: "NZ" , area: 84339067 , uuid: "0c883ff8-5732-4a64-b22d-a2777e8d894a" },
-];
 
-function CountryCards ({country}){
+function CountryCards ({country, onClick}){
   return (
-    <div className="bg-gray-100 flex flex-row gap-3 sm:gap-0 justify-between py-4 px-2 sm:p-8 mt-3 rounded-xl items-center">
+    <div 
+      onClick = {onClick}
+      className="bg-secondary hover:bg-hoverColor shadow-sm shadow-shadowColor cursor-pointer flex flex-row gap-3 sm:gap-0 justify-between py-4 px-2 sm:p-8 mt-3 rounded-xl items-center">
+    
       <div className="text-xl">{country.flag}</div>
       <div className="text-xl font-bold">{country.name}</div>
 
@@ -38,10 +37,11 @@ const handleSearch = async (countryName) => {
     return;
 }
 
-function Homepage() {
+function HomePage() {
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("All");
+  const navigate = useNavigate();
 
   const filteredCountries = hardcodedCountries.filter((countryName) =>{
     const matchesRegion = selectedRegion === "All" || countryName.region === selectedRegion;
@@ -68,7 +68,9 @@ function Homepage() {
         {filteredCountries.map((country) => ( //maps through the filtered countries to display the country cards
          <CountryCards
             key={country.uuid}
-            country = {country}/>  
+            country = {country} 
+            onClick={() => navigate(`/details/${country.uuid}`,{state: {country}})}
+            /> 
         ))}
      
       </div>
@@ -77,4 +79,4 @@ function Homepage() {
   );
 }
 
-export default Homepage
+export default HomePage

@@ -9,7 +9,7 @@ function Searchbar({searchInput, setSearchInput, selectedRegion, setSelectedRegi
     <div className='justify-items-center'>
      
         {/* Search Setion */}
-        <form className="mt-4 border border-gray-200 rounded-full bg-gray-100 text-gray-500 px-2 py-4 w-full flex flex-row gap-3 items-center cursor-pointer">
+        <form className="mt-4 border border-gray-200 rounded-full bg-secondary text-gray-500 px-2 py-4 w-full flex flex-row gap-3 items-center cursor-pointer">
             <IoSearchSharp className="text-xl ml-4" />
             <input
                 type="text" 
@@ -28,7 +28,7 @@ function Searchbar({searchInput, setSearchInput, selectedRegion, setSelectedRegi
                     <button 
                         key={region}
                         onClick={() => setSelectedRegion(region)}
-                        className={` ring-1 border border-gray-300 rounded-lg px-4 py-1 
+                        className={` ring-1 border border-gray-300 rounded-lg px-4 py-1 cursor-pointer
                             ${selectedRegion === region
                                 ? `${regionStyles[region]} `
                                 : `bg-gray-200 text-gray-600`}`}
