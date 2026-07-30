@@ -1,5 +1,7 @@
 import {useParams} from "react-router-dom";
 import hardcodedCountries from "../CountriesData";
+import { CountriesData } from "../CountriesAPI";
+import { useEffect } from "react";
 
 
 function DetailsPage(){
@@ -22,6 +24,9 @@ function DetailsPage(){
         { label: "TLD", value: country.tld || "N/A" },
     ];
 
+    useEffect(()=>{
+        CountriesData()
+    },[])
 
     return(
         <div className="items-center w-full p-10 flex flex-col gap-5">
@@ -81,16 +86,16 @@ function DetailsPage(){
                                 <div className="flex flex-row gap-1 text-xs flex-wrap pr-3">
                                     
                                     <div className="border-gray-400 rounded-sm bg-cyan-400 dark:bg-cyan-500 px-1">
-                                        <span className="text-[#111827]">Region:</span>
-                                        <span className="text-[#111827] font-medium p-0.5">{neighbourCity.region}</span>
+                                        <span className="text-neighbourCityText">Region:</span>
+                                        <span className="text-neighbourCityText font-medium p-0.5">{neighbourCity.region}</span>
                                     </div>
                                      <div className="border-gray-400 rounded-sm bg-blue-300 dark:bg-blue-500 px-1">
-                                        <span className="text-[#111827]">Population:</span>
-                                        <span className="text-[#111827] font-medium p-0.5">{neighbourCity.population}</span>
+                                        <span className="text-neighbourCityText">Population:</span>
+                                        <span className="text-neighbourCityText font-medium p-0.5">{neighbourCity.population}</span>
                                     </div>
                                      <div className="border-gray-400 rounded-sm bg-purple-300 dark:bg-purple-500 px-1">
-                                        <span className="text-[#111827]">Area:</span>
-                                        <span className="text-[#111827] font-medium p-0.5">{neighbourCity.area}</span>
+                                        <span className="text-neighbourCityText">Area:</span>
+                                        <span className="text-neighbourCityText font-medium p-0.5">{neighbourCity.area}</span>
                                     </div>
                                 </div>
                             </div>

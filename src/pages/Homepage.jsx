@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import hardcodedCountries from "../CountriesData";
 
-
 function CountryCards ({country, onClick}){
   return (
     <div 
@@ -32,7 +31,6 @@ function CountryCards ({country, onClick}){
   )
 }
 
-
 const handleSearch = async (countryName) => {
   if (countryName.trim() === "")
     return;
@@ -60,7 +58,6 @@ function HomePage() {
           setSelectedRegion={setSelectedRegion}
           placeholder = {"Search by country name or region"}
       />
-
        <p className="text-sm text-gray-500 dark:text-gray-400 mt-4"> {/*shows the user the number of countries that are filtered (no duplicates) */}
         Found {filteredCountries.length} countries. 
       </p>
