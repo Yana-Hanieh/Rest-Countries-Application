@@ -12,21 +12,21 @@ function CountryCards ({country, onClick}){
     
       <div className="text-sm">{country.flag}</div>
       {/* dont make the width fixed, make it by percentages/divisions */}
-      <div title={country.name} className="sm:text-xl font-semibold sm:font-bold truncate w-25 sm:w-1/3 ">{country.name}</div>
+      <div title={country.name} className="sm:text-xl font-semibold sm:font-bold truncate w-25 sm:w-1/3 dark:text-gray-200">{country.name}</div>
 
       <div className="flex flex-col">
-        <div className="text-gray-500 text-xs">Region</div>
-        <div className="font-semibold text-sm sm:text-md">{country.region}</div>
+        <div className="text-gray-500 dark:text-gray-400 text-xs">Region</div>
+        <div className="font-semibold text-sm dark:text-gray-200 sm:text-md">{country.region}</div>
       </div>
 
       <div className="flex flex-col">
-        <div className="text-gray-500 text-xs">population</div>
-        <div className="font-semibold text-sm sm:text-md">{country.population}</div>
+        <div className="text-gray-500 dark:text-gray-400 text-xs">population</div>
+        <div className="font-semibold text-sm dark:text-gray-200 sm:text-md">{country.population}</div>
       </div>
       
       <div className="flex flex-col">
-        <div className="text-gray-500 text-xs">Area km</div>
-        <div className="font-semibold text-sm sm:text-md">{country.area}</div>
+        <div className="text-gray-500 dark:text-gray-400 text-xs">Area km</div>
+        <div className="font-semibold dark:text-gray-200 text-sm sm:text-md">{country.area}</div>
       </div>  
     </div>
   )
@@ -52,7 +52,7 @@ function HomePage() {
 
   return (
     <div className='justify-items-center p-8'>
-      <div className="sm:text-2xl text-xl font-medium text-center">Get information about the countries.</div>
+      <div className="sm:text-2xl text-xl font-medium text-center dark:text-gray-200">Get information about the countries.</div>
         <Searchbar //takes the searchbar and passes down props based on the parameters the searchbar takes
           searchInput={searchInput}
           setSearchInput={setSearchInput}
@@ -61,7 +61,7 @@ function HomePage() {
           placeholder = {"Search by country name or region"}
       />
 
-       <p className="text-sm text-gray-500 mt-4"> {/*shows the user the number of countries that are filtered (no duplicates) */}
+       <p className="text-sm text-gray-500 dark:text-gray-400 mt-4"> {/*shows the user the number of countries that are filtered (no duplicates) */}
         Found {filteredCountries.length} countries. 
       </p>
 

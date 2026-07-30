@@ -1,10 +1,19 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #e2e8f0;
   --color-secondary: #f8fafc;
   --color-shadowColor: #94a3b8;
   --color-hoverColor: #f3f4f4;    
+}
+
+.dark{
+  --color-primary: #0f172a;
+  --color-secondary: #1e293b;
+  --color-shadowColor: #475569;
+  --color-hoverColor: #334155;
 }
 
 :root{
