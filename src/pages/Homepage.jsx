@@ -53,7 +53,7 @@ function HomePage() {
   return (
     <div className='justify-items-center p-8'>
       <div className="sm:text-2xl text-xl font-medium text-center">Get information about the countries.</div>
-        <Searchbar
+        <Searchbar //takes the searchbar and passes down props based on the parameters the searchbar takes
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           selectedRegion={selectedRegion}
@@ -61,17 +61,17 @@ function HomePage() {
           placeholder = {"Search by country name or region"}
       />
 
-      <p className="text-sm text-gray-500 mt-4"> 
-        Found {filteredCountries.length} countries.
+       <p className="text-sm text-gray-500 mt-4"> {/*shows the user the number of countries that are filtered (no duplicates) */}
+        Found {filteredCountries.length} countries. 
       </p>
 
       <div className="lg:w-1/2">
         {filteredCountries.map((country) => ( //maps through the filtered countries to display the country cards
-         <CountryCards
-            key={country.uuid}
-            country = {country} 
-            onClick={() => navigate(`/details/${country.uuid}`,{state: {country}})}
-            /> 
+          <CountryCards 
+              key={country.uuid}
+              country = {country} 
+              onClick={() => navigate(`/details/${country.uuid}`,{state: {country}})} //navigates to the selected country, changing the url based on the uuid of the country
+          /> 
         ))}
      
       </div>
