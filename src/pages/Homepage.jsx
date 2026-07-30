@@ -10,22 +10,23 @@ function CountryCards ({country, onClick}){
       onClick = {onClick}
       className="bg-secondary hover:bg-hoverColor shadow-sm shadow-shadowColor cursor-pointer flex flex-row gap-3 sm:gap-0 justify-between py-4 px-2 sm:p-8 mt-3 rounded-xl items-center">
     
-      <div className="text-xl">{country.flag}</div>
-      <div className="text-xl font-bold">{country.name}</div>
+      <div className="text-sm">{country.flag}</div>
+      {/* dont make the width fixed, make it by percentages/divisions */}
+      <div title={country.name} className="sm:text-xl font-semibold sm:font-bold truncate w-25 sm:w-1/3 ">{country.name}</div>
 
       <div className="flex flex-col">
         <div className="text-gray-500 text-xs">Region</div>
-        <div className="font-semibold text-md">{country.region}</div>
+        <div className="font-semibold text-sm sm:text-md">{country.region}</div>
       </div>
 
       <div className="flex flex-col">
-        <div className="text-gray-500 text-xs">popiulation</div>
-        <div className="font-semibold">{country.population}</div>
+        <div className="text-gray-500 text-xs">population</div>
+        <div className="font-semibold text-sm sm:text-md">{country.population}</div>
       </div>
       
       <div className="flex flex-col">
         <div className="text-gray-500 text-xs">Area km</div>
-        <div className="font-semibold text-md">{country.area}</div>
+        <div className="font-semibold text-sm sm:text-md">{country.area}</div>
       </div>  
     </div>
   )

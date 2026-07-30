@@ -90,3 +90,4 @@ const hardcodedCountries = [
     neighbours: [],
   },
 ];
+export default hardcodedCountries
