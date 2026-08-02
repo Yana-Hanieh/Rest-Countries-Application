@@ -32,7 +32,7 @@ function App() {
         <div className="flex flex-row gap-4 items-center">
           {!isHomePage &&( //if user is on the homepage then it skips this block
              <IoArrowBack  //if user is not on the homepage then the arrow appears allowing the user to go back
-            onClick={() => navigate(-1)} //-1 is used so that the user goes back to the page he was originally from, helps when the app is big with various pages
+            onClick={() => navigate(`/`)} //when user clicks on the arrow he goes back to the homepage if (-1) was used, the user goes back to the page he was originally from, helps when the app is big with various pages
             className="text-2xl dark:text-gray-200 border border-transparent rounded-full bg-secondary hover:bg-hoverColor cursor-pointer" 
             />
           )}

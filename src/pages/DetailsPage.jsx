@@ -1,32 +1,31 @@
 import {useParams} from "react-router-dom";
-import hardcodedCountries from "../CountriesData";
-import { CountriesData } from "../CountriesAPI";
+// import hardcodedCountries from "../CountriesData";
 import { useEffect } from "react";
 
 
 function DetailsPage(){
     const {uuid} = useParams();
-    const country = hardcodedCountries.find((c) => c.uuid === uuid);
+    // const country = hardcodedCountries.find((c) => c.uuid === uuid);
 
-    if (!country) //if searched country is not found
-        return <div className="p-10">Country not found</div>;
+    // if (!country) //if searched country is not found
+    //     return <div className="p-10">Country not found</div>;
 
-    const detailsList = [
-        { label: "Native Name", value: country.nativeName || "N/A" },
-        { label: "Name", value: country.name || "N/A" },
-        { label: "Capital", value: country.capital || "N/A" },
-        { label: "Region", value: country.region || "N/A" },
-        { label: "Area Km²", value: country.area ? country.area.toLocaleString() : "N/A" },
-        { label: "Population", value: country.population ? country.population.toLocaleString() : "N/A" },
-        { label: "Calling Code", value: country.callingCode || "N/A" },
-        { label: "GINI Index", value: country.gini || "N/A" },
-        { label: "Currency", value: country.currency || "N/A" },
-        { label: "TLD", value: country.tld || "N/A" },
-    ];
+    // const detailsList = [
+    //     { label: "Native Name", value: country.nativeName || "N/A" },
+    //     { label: "Name", value: country.name || "N/A" },
+    //     { label: "Capital", value: country.capital || "N/A" },
+    //     { label: "Region", value: country.region || "N/A" },
+    //     { label: "Area Km²", value: country.area ? country.area.toLocaleString() : "N/A" },
+    //     { label: "Population", value: country.population ? country.population.toLocaleString() : "N/A" },
+    //     { label: "Calling Code", value: country.callingCode || "N/A" },
+    //     { label: "GINI Index", value: country.gini || "N/A" },
+    //     { label: "Currency", value: country.currency || "N/A" },
+    //     { label: "TLD", value: country.tld || "N/A" },
+    // ];
 
-    useEffect(()=>{
-        CountriesData()
-    },[])
+    // useEffect(()=>{
+    //     CountriesData()
+    // },[])
 
     return(
         <div className="items-center w-full p-10 flex flex-col gap-5">
@@ -37,14 +36,14 @@ function DetailsPage(){
                     <span className="text-2xl font-semibold dark:text-gray-200">{country.name}</span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                    {detailsList.map((item) => (
+                    {/* {detailsList.map((item) => (
                         <div 
                         key={item.label}
                         className="flex flex-col border border-transparent bg-hoverColor rounded-md w-30 pl-1 md:w-50 sm:pl-3 py-2">
                             <div className="text-gray-500 dark:text-gray-400 text-xs">{item.label}</div>
                             <div className="font-semibold dark:text-gray-200 text-md">{item.value}</div>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
             <div className="border border-gray-300 dark:border-gray-500 w-full"></div>
