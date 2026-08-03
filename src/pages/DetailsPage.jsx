@@ -3,16 +3,15 @@ import { CgSpinner } from "react-icons/cg";
 import { getCountryByCode, getCountriesByName, getPopularCities } from "../CountriesAPI";
 import { useEffect, useState } from "react";
 
-
 function DetailsPage(){
-    const [countryData, setCountryData] = useState();
+    const [countryData, setCountryData] = useState(); //holds the main country object thats fetched from the API
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const {code} = useParams(); //gets the alpha_3 code from the url
-    const [neighbours, setNeighbours] = useState([]); //state to hold the neighbouring countries data
-    const [popularCities, setPopularCities] = useState([]); //state to hold the popular cities data
+    const {code} = useParams(); //gets the country code (alpha_3 code) from the url directly
+    const [neighbours, setNeighbours] = useState([]); //array to hold the neighbouring countries data
+    const [popularCities, setPopularCities] = useState([]); //array to hold the popular cities data
 
-    const detailsList = [
+    const detailsList = [ //formating the country attributes into a list that's easily mapped to display
         { label: "NativeName", value: countryData?.nativeName || "N/A" },
         { label: "Name", value: countryData?.name || "N/A" },
         { label: "Capital", value: countryData?.capital || "N/A" },
@@ -23,10 +22,8 @@ function DetailsPage(){
         { label: "Currency", value: countryData?.currencies?.[0]?.name || "N/A" },
         { label: "TLD", value: countryData?.topLevelDomain?.[0] || "N/A" },
     ];
-    // const {uuid} = useParams();
-    // const country = hardcodedCountries.find((c) => c.uuid === uuid);
-
   
+    //Data fetching useEffect: fetches the country data, neighbouring countries, and popular cities when the component mounts or when the country code changes
     useEffect(() => {
         const fetchCountryData = async () => {
             console.log("Fetching data for country code:", code);
@@ -36,9 +33,9 @@ function DetailsPage(){
                 const data = await getCountryByCode(code); //fetches the country data by its alpha_3 code
                 setCountryData(data);
                 
-                if (data.borders && data.borders.length > 0) {
+                if (data?.borders && data.borders.length > 0) { //fetches the countries that have land borders
                     try{
-                        const neighbourData = await getCountriesByName(data.name); //fetches the neighbouring countries by their names
+                        const neighbourData = await getCountriesByName(data.name); //fetches the neighbouring countries bordering the selected country by their names
                         setNeighbours(neighbourData);
                     } catch (neighbourErr){
                         console.error(neighbourErr);
@@ -50,7 +47,7 @@ function DetailsPage(){
                 }
                 try{
                     const cityData = await getPopularCities(data.alpha2Code); //fetches the popular cities by the country's alpha_2 code
-                    setPopularCities(cityData);
+                    setPopularCities(cityData); //sets the popular cities into the cityData array
                 } catch(err){
                     console.error(err);
                     setPopularCities([]); //set popular cities to empty array if fetching fails 
@@ -62,8 +59,9 @@ function DetailsPage(){
                 setLoading(false);
             }
         }; 
-    fetchCountryData();
-    }, [code]); //[] re-run the effect if the code changes (when navigating to a different country)
+
+    fetchCountryData(); //calls the function to fetch country data when the component mounts or when the country code changes
+    }, [code]); //re-run the effect if the code changes (when navigating to a different country)
 
     if (loading) {
       return (
@@ -88,6 +86,7 @@ function DetailsPage(){
     return(
         <div className="items-center w-full p-10 flex flex-col gap-5">
 
+            {/* Main Country details */}
             <div className="bg-secondary justify-center rounded-lg shadow-sm shadow-shadowColor flex flex-col sm:flex-row gap-8 p-5 w-full max-w-3xl">
                 <div className="flex flex-col gap-5 items-center">
                      <img 
@@ -97,7 +96,7 @@ function DetailsPage(){
                     <span className="text-2xl font-semibold dark:text-gray-200">{countryData.name}</span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                    {detailsList.map((item) => (
+                    {detailsList.map((item) => (//maps through the detailsList array to display each country attribute in a formatted way
                         <div 
                         key={item.label}
                         className="flex flex-col border border-transparent bg-hoverColor rounded-md w-30 pl-1 md:w-50 sm:pl-3 py-2">
@@ -109,25 +108,21 @@ function DetailsPage(){
             </div>
             <div className="border border-gray-300 dark:border-gray-500 w-full"></div>
 
-
+            {/* Displays the popular cities  */}
             <h1 className="text-xl font-bold dark:text-gray-200">Most popular cities in {countryData?.name}</h1>
             <div className="bg-secondary justify-center rounded-lg shadow-sm shadow-shadowColor flex flex-col sm:flex-row gap-2 p-5 w-full max-w-3xl">
                 <div className="flex flex-col gap-5 items-center">
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4 w-full ">
-                    {popularCities.length === 0 ? (
+                    {popularCities.length === 0 ? ( //if no popular cities are found, display a message
                         <p className="text-gray-500 dark:text-gray-400"> No city data available</p>
                     ) : 
                     (popularCities.map((city,index) => (
                         <div 
                         key={index}
                         className="flex flex-row gap-4 border border-transparent bg-hoverColor rounded-md w-full pl-1 sm:pl-3 py-2">
-                            <img 
-                                src={city.flags?.png} 
-                                alt={`${city.name} flag`} 
-                                className="w-14 h-14 rounded-full"/>
                             <div className="flex flex-col ">
-                                <div className="text-xl dark:text-gray-100">{city.name}</div>
+                                <div className="text-2xl dark:text-gray-100">{city.name}</div>
                                 <div className="text-xs border border-gray-400 rounded-sm bg-gray-200 dark:bg-gray-500 dark:text-gray-300 font-semibold w-full text-center">POP: {city.population}</div>
                             </div>
                         </div>
@@ -137,16 +132,16 @@ function DetailsPage(){
             </div>
             <div className="border border-gray-300 dark:border-gray-500  w-full"></div>
 
-
+            {/* Displays the neighbouring countries */}
             <h1 className="text-xl font-bold dark:text-gray-200">Neighboring Countries of {countryData.name} ({neighbours.length})</h1>
             <div className="bg-secondary justify-center rounded-lg shadow-sm shadow-shadowColor flex flex-col sm:flex-row gap-2 p-5 w-full max-w-3xl">
                 <div className="flex flex-col gap-5 items-center">
                 </div>
               
                 <div className="grid sm:grid-cols-2 gap-4 w-full ">
-                  {neighbours.length === 0 ? (
+                  {neighbours.length === 0 ? ( //if no neighbouring countries are found, display a message
                     <p className="text-gray-500 dark:text-gray-400">No neighboring countries found.</p>
-                ): ( neighbours.map((neighbourCity,index) => (
+                    ) : ( neighbours.map((neighbourCity,index) => (
                         <div 
                         key={index}
                         className="flex flex-row gap-4 border border-transparent bg-hoverColor rounded-md w-full pl-1 sm:pl-3 py-2 items-center">
