@@ -49,7 +49,7 @@ function App() {
       <div className="border border-gray-300 dark:border-gray-300"></div>
        <Routes>
           <Route path="/" element={<HomePage />}/>
-          <Route path="/details/:uuid" element={<DetailsPage />}/>
+          <Route path="/details/:code" element={<DetailsPage />}/>
       </Routes>
       
       

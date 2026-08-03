@@ -11,11 +11,11 @@ function CountryCards ({country, onClick}){
       className="bg-secondary hover:bg-hoverColor shadow-sm shadow-shadowColor cursor-pointer flex flex-row gap-3 sm:gap-0 justify-between py-4 px-2 sm:p-8 mt-3 rounded-xl items-center">
     
       <img 
-        src={country.flag?.url_png || country.flag?.png}
-        alt={`${country.names.common} flag`} 
-        className="text-sm w-30"/>
-      {/* dont make the width fixed, make it by percentages/divisions */}
-      <div title={country.names.common} className="sm:text-xl font-semibold sm:font-bold truncate w-25 sm:w-1/3 dark:text-gray-200">{country.names.common}</div>
+        src={country.flags.png}
+        alt={`${country.name} flag`} 
+        className="text-sm w-1/5"/>
+     
+      <div title={country.name} className="sm:text-xl font-semibold sm:font-bold truncate w-20 sm:w-1/5 dark:text-gray-200">{country.name}</div>
 
       <div className="flex flex-col">
         <div className="text-gray-500 dark:text-gray-400 text-xs">Region</div>
@@ -29,7 +29,7 @@ function CountryCards ({country, onClick}){
       
       <div className="flex flex-col">
         <div className="text-gray-500 dark:text-gray-400 text-xs">Area km</div>
-        <div className="font-semibold dark:text-gray-200 text-sm sm:text-md">{country.area.kilometers}</div>
+        <div className="font-semibold dark:text-gray-200 text-sm sm:text-md">{country.area}</div>
       </div>  
     </div>
   )
@@ -45,11 +45,6 @@ function HomePage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // const handleSearchSubmit=(e) => {
-  //   if (e) 
-  //     e.preventDefault(); //prevents the page from automatic refresh 
-  //   setSubmittedQuery(searchInput.trim());
-  // }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -58,10 +53,11 @@ function HomePage() {
           setLoading(true);
           setError(null);
           // Pass empty query so we fetch the region's full dataset once
-          const data = await getCountries({} , controller.signal);
+          const data = await getCountries({region: selectedRegion}, controller.signal);
           setCountries(data);
 
         } catch (err) {
+          console.error(err);
           setError("Failed to load country data");
 
         } finally{
@@ -73,7 +69,7 @@ function HomePage() {
     return () =>{
       controller.abort();
     }
-  }, []); //empty dependency array means this useEffect runs only once when the component mounts, and not on every render
+  }, [selectedRegion]); //empty dependency array means this useEffect runs only once when the component mounts, and not on every render
 
   //clears submitted lock as soon as user types something new
   const handleInputChange = (value) => {
@@ -111,7 +107,7 @@ function HomePage() {
     //clientside search query filtering, only filters the countries that are already fetched and stored in the countries state
     if (!activeQuery) 
       return true;
-    const countryName = country.names?.common?.toLowerCase() || "";
+    const countryName = country.name?.toLowerCase() || "";
 
     if(submittedQuery){
       //lock the search to only exact matches or starts with the query when submitted (user enters)
@@ -122,12 +118,13 @@ function HomePage() {
   });
 
   if (loading) {
-  return (
-    <div className="flex items-center justify-center w-full gap-3 p-15">
-      <CgSpinner className="animate-spin text-4xl text-cyan-400 " />
-      <span className="text-gray-900 dark:text-gray-200 text-xl font-medium ">Loading countries...</span>
-    </div>
-  );
+    return (
+      <div className="flex items-center justify-center w-full gap-3 p-15">
+        <CgSpinner className="animate-spin text-4xl text-cyan-400 " />
+        <span className="text-gray-900 dark:text-gray-200 text-xl font-medium ">Loading countries...</span>
+      </div>
+    )
+  };
 
   if (error){
     return(
@@ -136,7 +133,7 @@ function HomePage() {
       </div>
     )
   }
-}
+
 
   return (
     <div className='justify-items-center p-8'>
@@ -154,12 +151,12 @@ function HomePage() {
         Found {visibleCountries.length} countries. 
       </p>
 
-      <div className="lg:w-1/2">
+      <div className="w-full md:w-4/5 lg:w-3/4 xl:w-1/2">
         {visibleCountries.map((country) => ( //maps through the filtered countries to display the country cards
           <CountryCards 
-              key={country.codes?.alpha_3 || country.names?.common}
+              key={country.alpha3Code || country.name}
               country = {country} 
-              onClick={() => navigate(`/details/${country.codes.alpha_3}`,{state: {country}})} //navigates to the selected country, changing the url based on the uuid of the country
+              onClick={() => navigate(`/details/${country.alpha3Code}`,{state: {country}})} //navigates to the selected country, changing the url based on the uuid of the country
           /> 
         ))}
         
