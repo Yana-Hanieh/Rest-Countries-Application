@@ -6,7 +6,13 @@
   --color-primary: #e2e8f0;
   --color-secondary: #f8fafc;
   --color-shadowColor: #94a3b8;
-  --color-hoverColor: #f3f4f4;    
+  --color-hoverColor: #f3f4f4;  
+  
+  --breakpoint-mobile: 460px; /* create a new screen breakpoint called mobile  */
+  --breakpoint-tiny: 260px;
+  /* Adding a ultra-wide desktop breakpoint (e.g., 1920px) */
+  --breakpoint-3xl: 120rem; 
+  
 }
 
 .dark{

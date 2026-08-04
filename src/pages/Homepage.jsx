@@ -8,29 +8,32 @@ function CountryCards ({country, onClick}){
   return (
     <div 
       onClick = {onClick}
-      className="bg-secondary hover:bg-hoverColor shadow-sm shadow-shadowColor cursor-pointer flex flex-row gap-3 sm:gap-0 justify-between py-4 px-2 sm:p-8 mt-3 rounded-xl items-center">
-    
-      <img 
-        src={country.flags.png}
-        alt={`${country.name} flag`} 
-        className="text-sm w-1/5"/>
-     
-      <div title={country.name} className="sm:text-xl font-semibold sm:font-bold truncate w-20 sm:w-1/5 dark:text-gray-200">{country.name}</div>
-
-      <div className="flex flex-col">
-        <div className="text-gray-500 dark:text-gray-400 text-xs">Region</div>
-        <div className="font-semibold text-sm dark:text-gray-200 sm:text-md">{country.region}</div>
-      </div>
-
-      <div className="flex flex-col">
-        <div className="text-gray-500 dark:text-gray-400 text-xs">population</div>
-        <div className="font-semibold text-sm dark:text-gray-200 sm:text-md">{country.population}</div>
+      className="bg-secondary hover:bg-hoverColor shadow-sm shadow-shadowColor cursor-pointer flex flex-col gap-2 sm:flex-row sm:gap-0 justify-between py-4 px-2 sm:p-8 mt-3 rounded-xl items-center w-full ">
+      <div className="flex flex-row gap-5 mobile:gap-10 items-center">
+        <img 
+          src={country.flags.png}
+          alt={`${country.name} flag`} 
+          className="text-sm mobile:w-1/3 w-1/4"/>
+      
+        <div title={country.name} className="sm:text-2xl font-semibold sm:font-bold truncate w-40 dark:text-gray-200">{country.name}</div>
       </div>
       
-      <div className="flex flex-col">
-        <div className="text-gray-500 dark:text-gray-400 text-xs">Area km</div>
-        <div className="font-semibold dark:text-gray-200 text-sm sm:text-md">{country.area}</div>
-      </div>  
+      <div className="flex gap-3 flex-wrap sm:gap-6 sm:flex-nowrap items-center">
+        <div className="flex flex-col ">
+          <div className="text-gray-500 dark:text-gray-400 text-xs mobile:text-md">Region</div>
+          <div className="text-xs dark:text-gray-50 mobile:text-lg">{country.region}</div>
+        </div>
+
+        <div className="flex flex-col">
+          <div className="text-gray-500 dark:text-gray-400 text-xs mobile:text-md">population</div>
+          <div className="text-xs dark:text-gray-50 mobile:text-lg">{country.population}</div>
+        </div>
+        
+        <div className="flex flex-col">
+          <div className="text-gray-500 dark:text-gray-400 text-xs mobile:text-md">Area km</div>
+          <div className="text-xs dark:text-gray-50 mobile:text-lg">{country.area}</div>
+        </div>  
+      </div>
     </div>
   )
 }
