@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
+import { IoArrowBack,IoArrowForward } from "react-icons/io5";
 import Searchbar from "../components/Searchbar";
 import { getCountries } from "../CountriesAPI";
 
@@ -9,13 +10,14 @@ function CountryCards ({country, onClick}){
     <div 
       onClick = {onClick}
       className="bg-secondary hover:bg-hoverColor shadow-sm shadow-shadowColor cursor-pointer flex flex-col gap-2 sm:flex-row sm:gap-0 justify-between py-4 px-2 sm:p-8 mt-3 rounded-xl items-center w-full ">
-      <div className="flex flex-row gap-5 mobile:gap-10 items-center">
+      
+      <div className="flex flex-col tiny:flex-row gap-5 mobile:gap-10 items-center">
         <img 
           src={country.flags.png}
           alt={`${country.name} flag`} 
           className="text-sm mobile:w-1/3 w-1/4"/>
       
-        <div title={country.name} className="sm:text-2xl font-semibold sm:font-bold truncate w-40 dark:text-gray-200">{country.name}</div>
+        <div title={country.name} className="sm:text-2xl font-semibold sm:font-bold truncate tiny:w-40 dark:text-gray-200">{country.name}</div>
       </div>
       
       <div className="flex gap-3 flex-wrap sm:gap-6 sm:flex-nowrap items-center">
@@ -124,6 +126,14 @@ function HomePage() {
     //live search, filter countries that include the query anywhere in their name while typing
     return countryName.includes(activeQuery);
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const countriesPerPage=20; 
+  const totalPages = Math.ceil(visibleCountries.length / countriesPerPage);
+  const paginatiedCountries = visibleCountries.slice( (currentPage -1) * countriesPerPage, currentPage * countriesPerPage);
+
+  useEffect(()=> {
+    setCurrentPage(1);
+  }, [searchInput, selectedRegion]);
 
   if (loading) {
     return (
@@ -160,17 +170,42 @@ function HomePage() {
       </p>
       {/* Displays the country cards based on the filtered countries from the search query and selected region. Clicking on a country card navigates to the details page for that country. */}
       <div className="w-full md:w-4/5 lg:w-3/4 xl:w-1/2">
-        {visibleCountries.map((country) => ( //maps through the filtered countries to display the country cards
+        {paginatiedCountries.map((country) => ( //maps through the filtered countries to display the country cards
           <CountryCards 
               key={country.alpha3Code || country.name}
               country = {country} 
               onClick={() => navigate(`/details/${country.alpha3Code}`,{state: {country}})} //navigates to the selected country, changing the url based on the uuid of the country
           /> 
         ))}
-        
-     
       </div>
 
+      {totalPages > 1 && (
+        <div className="flex flex-row gap-5 p-3 items-center">
+          <button
+            onClick = {() => setCurrentPage((p) => Math.max(1,p-1))}
+            disabled = {currentPage === 1}
+            className=" paginationStyle border-0 rounded-md bg-gray-300 dark:bg-secondary"
+          >
+            <span className="text-[10px]">Prev</span>
+            <IoArrowBack className=" text-xs " />
+          </button>
+
+          <span className="text-sm dark:text-gray-300">
+            Page {currentPage} of {totalPages}
+          </span>
+
+           <button
+            onClick = {() => setCurrentPage((p) => Math.min(totalPages,p+1))}
+            disabled = {currentPage === totalPages}
+            className=" paginationStyle  border-0 rounded-md bg-gray-300 dark:bg-gray-500  "
+          >
+            <span className="text-[10px] order-2">Next</span>
+           <IoArrowForward className=" text-xs order-1" />
+          </button>
+
+      </div>
+      )}
+      
     </div>
   );
 }

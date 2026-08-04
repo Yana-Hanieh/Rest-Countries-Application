@@ -10,6 +10,7 @@
   
   --breakpoint-mobile: 460px; /* create a new screen breakpoint called mobile  */
   --breakpoint-tiny: 260px;
+  --breakpoint-yana: 230px;
   /* Adding a ultra-wide desktop breakpoint (e.g., 1920px) */
   --breakpoint-3xl: 120rem; 
   
@@ -25,4 +26,10 @@
 
 :root{
   font-family: "DM Sans", sans-serif;
+}
+
+@layer components {
+  .paginationStyle{
+    @apply flex flex-col justify-center items-center w-10 dark:text-gray-200 border cursor-pointer py-1
+  }
 }

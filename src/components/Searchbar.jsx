@@ -23,12 +23,12 @@ function Searchbar({searchInput, setSearchInput, onSearchSubmit, selectedRegion,
        {/* filter section */}
        <div className="flex flex-col gap-3 mt-2">
             <span className="text-gray-500 dark:text-gray-400">Filter by region:</span>
-            <div className=" flex flex-wrap gap-3 justify-center">
+            <div className=" flex flex-wrap gap-2 mobile:gap-3 justify-center">
                 {regions.map((region) => ( //maps through the array that contains the region names
                     <button 
                         key={region}
                         onClick={() => setSelectedRegion(region)}
-                        className={`border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-1 cursor-pointer
+                        className={`border border-gray-300 dark:border-gray-700 rounded-lg px-2 py-0.5 mobile:px-4 mobile:py-1 cursor-pointer
                             ${selectedRegion === region
                                 ? `${regionStyles[region]} `
                                 : `bg-gray-100 dark:bg-gray-500 text-gray-600 dark:text-gray-200`}`}
